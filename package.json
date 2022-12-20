@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server:dev": "nodemon backend/server.js",
-    "server:prod": "NODE_ENV=production nodemon backend/server.js",
+    "server:prod": "SET NODE_ENV=production nodemon backend/server.js",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server:dev \" \"npm run client\"",
     "prod": "concurrently \"npm run server:prod \" \"npm run client\""

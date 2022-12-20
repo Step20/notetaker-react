@@ -24,9 +24,16 @@ const prodError = (res, err) => {
 };
 
 const handleValidationError = (error) => {
-  let allErrors = Object.values(error.errors).map((e) => e.message);
+  //let allErrors = Object.values(error.errors).map((e) => e.message);
+  let allErrors = {};
 
-  const message = `Invaild input: ${allErrors.join(" ")}`;
+  //store the errors as a key value pair
+  Object.values(error.erors).forEach((item) => {
+    return (allErrors[item.path] = item.message);
+  });
+
+  //const message = `Invaild input: ${allErrors.join(" ")}`;
+  const message = JSON.stringify(allErrors);
 
   return new AppError(message, 400);
 };
