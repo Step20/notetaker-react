@@ -38,13 +38,25 @@ exports.register = asyncErrorHandler(async (req, res, next) => {
 exports.login = asyncErrorHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
-  //1. check if the email and the password
+  // //1. check if the email and the password
+  // if (!email || !password) {
+  //   return next(new AppError("Email and Password are require!"), 400);
+  // }
   if (!email || !password) {
-    return next(new AppError("Email and Password are require!"), 400);
+    let message = {};
+
+    if (!email) {
+      message.email = "Email is required!";
+    }
+
+    if (!password) {
+      message.password = "Password id required!";
+    }
+    return next(new AppError(JSON.stringify(message)), 400);
   }
-  //2. check if the user exist, and the password is correct
+
+  //2. check if the user exists, and the password is correct
   const user = await User.findOne({ email: email });
-  //console.log(user);
 
   if (!user || !(await user.comparePassword(password))) {
     return next(new AppError("Email or password incorrect", 400));
